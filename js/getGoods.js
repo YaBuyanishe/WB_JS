@@ -1,6 +1,6 @@
 const getGoods = () => {
     const links = document.querySelectorAll('.navigation-link');
-    const viewAll = document.querySelectorAll('.more');
+    const viewAll = document.querySelector('.more');
 
     const renderGoods = (goods) => {
         const goodsContainer = document.querySelector('.long-goods-list');
@@ -27,8 +27,6 @@ const getGoods = () => {
             `;
             
             goodsContainer.append(goodBlock);
-
-            console.log(goodBlock);
         });
     };
 
@@ -59,19 +57,16 @@ const getGoods = () => {
         });
     });
 
-    viewAll.forEach((link) => {
-        link.addEventListener('click', (event) => {
-            event.preventDefault(); 
-
-            const linkValue = link.textContent;
-            const category = link.dataset.field;
-
-            getData(linkValue, category);
-        })
-    })
-
     if (localStorage.getItem('goods') && window.location.pathname === "/goods.html") {
         renderGoods(JSON.parse(localStorage.getItem('goods')));
+    }
+
+    if (viewAll) {
+        viewAll.addEventListener('click', () => {
+            event.preventDefault();
+
+            getData();
+        });
     }
 };
 
